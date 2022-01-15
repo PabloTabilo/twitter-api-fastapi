@@ -84,15 +84,15 @@ def signup(user : UserRegister = Body(...)):
     This path operations register a user in the app.
 
     Parameters:
-        - Request body parameter
-            - user : UserRegister
+    - Request body parameter
+        - user : UserRegister
     
     Returns a json with the basic user info:
-        - user_id : UUID
-        - email : EmailStr
-        - first_name : str
-        - last_name : str
-        - birth_date : date
+    - user_id : UUID
+    - email : EmailStr
+    - first_name : str
+    - last_name : str
+    - birth_date : date
     """
     with open("users.json","r+",encoding="utf-8") as f:
         res = json.loads(f.read())
@@ -131,7 +131,7 @@ def show_all_users():
     This path operation show all the users in the app.
     
     Parameters:
-        -
+    - None
 
     Returns a json list with all users of type User
     """
@@ -191,8 +191,36 @@ def show_all_tweets():
         summary="Post a tweet",
         tags=["Tweets"]
         )
-def post():
-    pass
+def post(tweet : Tweet = Body(...)):
+    """
+    Post a tweet
+
+    This path operations post a tweet in the app.
+
+    Parameters:
+    - Request body parameter
+        - tweet : Tweet
+    
+    Returns a json with the basic tweet info:
+    - tweet_id : UUID
+    - content: str
+    - created_at : datetime
+    - updated_at : Optional[datetime] 
+    - by : User
+    """
+    with open("tweets.json","r+",encoding="utf-8") as f:
+        res = json.loads(f.read())
+        tweet_dict = tweet.dict()
+        tweet_dict["tweet_id"] = str(tweet_dict["tweet_id"]) 
+        tweet_dict["created_at"] = str(tweet_dict["created_at"])
+        if tweet_dict["updated_at"] is not None:
+            tweet_dict["updated_at"] = str(tweet_dict["updated_at"]) 
+        tweet_dict["by"]["user_id"] = str(tweet_dict["by"]["user_id"]) 
+        tweet_dict["by"]["birth_date"] = str(tweet_dict["by"]["birth_date"])
+        res.append(tweet_dict)
+        f.seek(0)
+        f.write(json.dumps(res))
+    return tweet
 
 
 @app.get(
