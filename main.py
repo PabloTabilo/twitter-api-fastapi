@@ -45,7 +45,7 @@ class User(UserBase):
     birth_date : Optional[date] = Field(default=None)
 
 
-class Tweets(BaseModel):
+class Tweet(BaseModel):
     tweet_id : UUID = Field(...)
     content : str = Field(..., 
             min_length=1,
@@ -55,14 +55,16 @@ class Tweets(BaseModel):
     updated_at : Optional[datetime] = Field(default=None)
     by : User = Field(...)
 
-@app.get(path="/")
+@app.get(
+        path="/",
+        summary="Check if services it's alive",
+        tags=["Home"]
+        )
 def home():
     return {"Twitter Api" : "is Working"}
 
 
 ## Users
-
-
 @app.post(
         path="/signup",
         response_model=User,
@@ -108,7 +110,7 @@ def show_a_user():
 
 
 @app.delete(
-        path="/users/{user_id}/delete",
+        path="/users/{user_id}",
         response_model=User,
         status_code=status.HTTP_200_OK,
         summary="Delete a user",
@@ -119,7 +121,7 @@ def delete_a_user():
 
 
 @app.put(
-        path="/users/{user_id}/update",
+        path="/users/{user_id}",
         response_model=User,
         status_code=status.HTTP_200_OK,
         summary="Update a user",
@@ -130,6 +132,63 @@ def update_a_user():
 
 
 ## Tweets
+@app.get(
+        path="/tweets",
+        response_model=List[Tweet],
+        status_code=status.HTTP_200_OK,
+        summary="Show all tweets",
+        tags=["Tweets"]
+        )
+def show_all_tweets():
+    pass
+
+
+@app.post(
+        path="/post",
+        response_model=Tweet,
+        status_code=status.HTTP_201_CREATED,
+        summary="Post a tweet",
+        tags=["Tweets"]
+        )
+def post():
+    pass
+
+
+@app.get(
+        path="/tweets/{tweets_id}",
+        response_model=Tweet,
+        status_code=status.HTTP_200_OK,
+        summary="Show a tweet",
+        tags=["Tweets"]
+        )
+def show_a_tweet():
+    pass
+
+
+@app.delete(
+        path="/tweets/{tweets_id}",
+        response_model=Tweet,
+        status_code=status.HTTP_200_OK,
+        summary="Delete a tweet",
+        tags=["Tweets"]
+        )
+def delete_a_tweet():
+    pass
+
+
+@app.put(
+        path="/tweets/{tweets_id}",
+        response_model=Tweet,
+        status_code=status.HTTP_200_OK,
+        summary="Update a tweet",
+        tags=["Tweets"]
+        )
+def update_a_tweet():
+    pass
+
+
+
+
 
 
 
