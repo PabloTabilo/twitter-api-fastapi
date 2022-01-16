@@ -8,3 +8,5 @@ Api based on Twitter using the fastapi package with python
 * Security info per User
 * Refactor architecture
 * Docker and Docker compose
+
+# Requeriments
