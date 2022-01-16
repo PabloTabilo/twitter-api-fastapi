@@ -181,7 +181,18 @@ def update_a_user():
         tags=["Tweets"]
         )
 def show_all_tweets():
-    pass
+    """
+    Show all Tweets
+
+    This path operation show all the tweets in the app.
+    
+    Parameters:
+    - None
+
+    Returns a json list with all tweets of type Tweet
+    """
+    with open("tweets.json","r",encoding="utf-8") as f:
+        return json.loads(f.read())
 
 
 @app.post(
