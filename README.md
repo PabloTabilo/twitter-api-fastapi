@@ -10,3 +10,9 @@ Api based on Twitter using the fastapi package with python
 * Docker and Docker compose
 
 # Requeriments
+Run enviroment
+requeriments.txt
+etc.
+
+# Motivation
+* https://github.com/JoseNoriegaa/platzi-twitter-api-fastapi
